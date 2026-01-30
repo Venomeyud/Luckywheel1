@@ -93,16 +93,15 @@
         
         .item-inner { 
             position: absolute; 
-            /* 为了适应更大的GIF图，位置稍微往外调了一点点 */
             top: -140px;  
             left: -50px; 
             width: 100px; 
             text-align: center; 
         }
         
-        /* 【修改点】图片尺寸放大，适配动图 */
+        /* 图片适配动图尺寸 */
         .item img { 
-            width: 55px; height: 55px; /* 之前是42px，动图大点好看 */
+            width: 55px; height: 55px; 
             object-fit: contain; 
             display: block; 
             margin: 0 auto 2px auto;
@@ -186,6 +185,14 @@
             100% { transform: rotate(0deg); }
         }
         
+        /* 神秘大奖缩放动画 */
+        .anim-zoom { animation: zoomPulse 1.5s infinite ease-in-out; }
+        @keyframes zoomPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        
         .close-btn {
             background: #FF2D55; color: white; border: none; padding: 12px 30px;
             border-radius: 20px; font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer;
@@ -214,14 +221,14 @@
                 <div class="content-wrap">
                     <div class="item" style="transform: rotate(30deg);">
                         <div class="item-inner">
-                            <img src="https://img.alicdn.com/bao/uploaded/i4/2207692660945/O1CN0188939c20q6vXvQzXQ_!!2207692660945.jpg_300x300.jpg">
+                            <img src="makeup.gif" onerror="this.src='https://img.alicdn.com/bao/uploaded/i4/2207692660945/O1CN0188939c20q6vXvQzXQ_!!2207692660945.jpg_300x300.jpg'">
                             <span>化妆品/保养品</span>
                         </div>
                     </div>
 
                     <div class="item" style="transform: rotate(90deg);">
                         <div class="item-inner">
-                            <img src="https://cdn-icons-png.flaticon.com/512/5726/5726678.png" style="filter: drop-shadow(0 0 5px gold); width:45px; height:45px;">
+                            <img class="anim-zoom" src="https://cdn-icons-png.flaticon.com/512/5726/5726678.png" style="filter: drop-shadow(0 0 5px gold); width:45px; height:45px;">
                             <span style="color:#d63384">✨神秘大奖✨</span>
                         </div>
                     </div>
@@ -242,14 +249,14 @@
 
                     <div class="item" style="transform: rotate(270deg);">
                         <div class="item-inner">
-                            <img src="https://img.alicdn.com/bao/uploaded/i3/2849132476/O1CN01a8899c1s511zXzXzX_!!2849132476.jpg_300x300.jpg">
+                            <img src="clothes.gif" onerror="this.src='https://img.alicdn.com/bao/uploaded/i3/2849132476/O1CN01a8899c1s511zXzXzX_!!2849132476.jpg_300x300.jpg'">
                             <span>衣裤/裙子/内衣</span>
                         </div>
                     </div>
 
                     <div class="item" style="transform: rotate(330deg);">
                         <div class="item-inner">
-                            <img src="https://img.alicdn.com/bao/uploaded/i1/2200723576550/O1CN0188939c20q6vXvQzXQ_!!2200723576550.jpg_300x300.jpg">
+                            <img src="jacket.gif" onerror="this.src='https://img.alicdn.com/bao/uploaded/i1/2200723576550/O1CN0188939c20q6vXvQzXQ_!!2200723576550.jpg_300x300.jpg'">
                             <span>羽绒服</span>
                         </div>
                     </div>
@@ -299,8 +306,7 @@
         function playTick() {
             if(audioCtx.state==='suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-            osc.type = 'sine'; // 正弦波
-            // 升调：从 400Hz 快速滑向 600Hz，听起来像气泡
+            osc.type = 'sine'; 
             osc.frequency.setValueAtTime(400, audioCtx.currentTime);
             osc.frequency.linearRampToValueAtTime(600, audioCtx.currentTime + 0.08);
             
