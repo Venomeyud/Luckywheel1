@@ -259,43 +259,47 @@
         const mBtn = document.getElementById('closeBtn'); 
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
+        // 【修改点】蛋仔派对风格音效
         function playTick() {
             if(audioCtx.state==='suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(200, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.05);
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+            const osc = audioCtx.createOscillator(); 
+            const gain = audioCtx.createGain();
+            
+            // 使用正弦波，声音更圆润可爱，像玩具
+            osc.type = 'sine';
+            
+            // 频率更高，且快速下降，模拟“啵”或“嘟”的声音
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.08);
+            
+            // 短促的音量包络
+            gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+            
             osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.08);
         }
 
-        // 【修改】闪亮登场音效 (Bling Bling)
+        // 【修改点】闪亮登场音效 (Bling Bling)
         function playWinSound() {
             if(audioCtx.state === 'suspended') audioCtx.resume();
             const now = audioCtx.currentTime;
-            // 一组高音音阶，模拟“叮叮叮叮✨”的闪亮感
+            // 闪亮的音阶
             const notes = [1046.50, 1318.51, 1567.98, 2093.00, 2637.02, 3135.96]; 
 
             notes.forEach((freq, i) => {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
-                osc.type = 'sine'; // 正弦波听起来像铃声，很干净
+                osc.type = 'sine'; 
                 osc.frequency.value = freq;
 
-                // 快速连续播放
                 const start = now + (i * 0.08);
-
                 gain.gain.setValueAtTime(0, start);
                 gain.gain.linearRampToValueAtTime(0.3, start + 0.02);
                 gain.gain.exponentialRampToValueAtTime(0.01, start + 0.8);
 
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-
-                osc.start(start);
-                osc.stop(start + 0.8);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(start); osc.stop(start + 0.8);
             });
         }
 
@@ -344,7 +348,7 @@
 
         function finishSpin(isWin) {
             if(isWin) {
-                playWinSound(); // 播放新的闪亮音效
+                playWinSound(); // 闪亮音效
                 document.getElementById('m-title').innerText = "🎉 中大奖啦！";
                 document.getElementById('m-title').style.color = "#FF2D55";
                 mIcon.src = winIcon; mIcon.className = "anim-win"; 
