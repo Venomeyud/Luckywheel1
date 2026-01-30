@@ -9,7 +9,6 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
             background-color: #E6E6FA; 
-            /* 薰衣草紫渐变背景 */
             background-image: linear-gradient(135deg, #E6E6FA 0%, #B0C4DE 100%);
             background-size: cover; 
             background-position: center;
@@ -74,7 +73,6 @@
             box-sizing: border-box;
             background: #fff;
             overflow: hidden;
-            /* 【修改点】移除了 CSS transition，改用 JS 控制动画以实现声音同步 */
         }
 
         /* 扇形背景色 */
@@ -133,6 +131,7 @@
             border: 3px solid #fff;
         }
         
+        /* 视频样式适配 */
         .center-bear-img {
             width: 100%;
             height: 100%;
@@ -212,47 +211,19 @@
                 <div class="fan-bg fan-6"></div>
 
                 <div class="content-wrap">
-                    <div class="item" style="transform: rotate(30deg);">
-                        <div class="item-inner">
-                            <img src="https://img.alicdn.com/bao/uploaded/i4/2207692660945/O1CN0188939c20q6vXvQzXQ_!!2207692660945.jpg_300x300.jpg">
-                            <span>戴森吹风机</span>
-                        </div>
-                    </div>
-                    <div class="item" style="transform: rotate(90deg);">
-                        <div class="item-inner">
-                            <img src="https://cdn-icons-png.flaticon.com/512/5726/5726678.png" style="filter: drop-shadow(0 0 5px gold); width:45px; height:45px;">
-                            <span style="color:#d63384">✨神秘大奖✨</span>
-                        </div>
-                    </div>
-                    <div class="item" style="transform: rotate(150deg);">
-                        <div class="item-inner">
-                            <img src="https://img.alicdn.com/bao/uploaded/i2/2213578026652/O1CN01h11B112CJIxZqGzXx_!!2213578026652.jpg_300x300.jpg">
-                            <span>拍立得相机</span>
-                        </div>
-                    </div>
-                    <div class="item" style="transform: rotate(210deg);">
-                        <div class="item-inner">
-                            <img src="https://cdn-icons-png.flaticon.com/512/416/416835.png" style="opacity:0.5">
-                            <span style="color:#666">什么都没有<br>(空气)</span>
-                        </div>
-                    </div>
-                    <div class="item" style="transform: rotate(270deg);">
-                        <div class="item-inner">
-                            <img src="https://img.alicdn.com/bao/uploaded/i3/2849132476/O1CN01a8899c1s511zXzXzX_!!2849132476.jpg_300x300.jpg">
-                            <span>Jellycat</span>
-                        </div>
-                    </div>
-                    <div class="item" style="transform: rotate(330deg);">
-                        <div class="item-inner">
-                            <img src="https://img.alicdn.com/bao/uploaded/i1/2200723576550/O1CN0188939c20q6vXvQzXQ_!!2200723576550.jpg_300x300.jpg">
-                            <span>Stanley水杯</span>
-                        </div>
-                    </div>
+                    <div class="item" style="transform: rotate(30deg);"><div class="item-inner"><img src="https://img.alicdn.com/bao/uploaded/i4/2207692660945/O1CN0188939c20q6vXvQzXQ_!!2207692660945.jpg_300x300.jpg"><span>戴森吹风机</span></div></div>
+                    <div class="item" style="transform: rotate(90deg);"><div class="item-inner"><img src="https://cdn-icons-png.flaticon.com/512/5726/5726678.png" style="filter: drop-shadow(0 0 5px gold); width:45px; height:45px;"><span style="color:#d63384">✨神秘大奖✨</span></div></div>
+                    <div class="item" style="transform: rotate(150deg);"><div class="item-inner"><img src="https://img.alicdn.com/bao/uploaded/i2/2213578026652/O1CN01h11B112CJIxZqGzXx_!!2213578026652.jpg_300x300.jpg"><span>拍立得相机</span></div></div>
+                    <div class="item" style="transform: rotate(210deg);"><div class="item-inner"><img src="https://cdn-icons-png.flaticon.com/512/416/416835.png" style="opacity:0.5"><span style="color:#666">什么都没有<br>(空气)</span></div></div>
+                    <div class="item" style="transform: rotate(270deg);"><div class="item-inner"><img src="https://img.alicdn.com/bao/uploaded/i3/2849132476/O1CN01a8899c1s511zXzXzX_!!2849132476.jpg_300x300.jpg"><span>Jellycat</span></div></div>
+                    <div class="item" style="transform: rotate(330deg);"><div class="item-inner"><img src="https://img.alicdn.com/bao/uploaded/i1/2200723576550/O1CN0188939c20q6vXvQzXQ_!!2200723576550.jpg_300x300.jpg"><span>Stanley水杯</span></div></div>
                 </div>
 
                 <div class="center-circle">
                     <video class="center-bear-img" autoplay loop muted playsinline poster="https://cdn-icons-png.flaticon.com/512/3769/3769037.png">
+                        <source src="bear.mp4" type="video/mp4">
                         <source src="bear.MP4" type="video/mp4">
+                        <source src="e8eb6841ebbe9db9f8b6ff22b2e123d9_720w.cmfv" type="video/mp4">
                     </video>
                 </div>
             </div>
@@ -271,7 +242,7 @@
     </div>
 
     <script>
-        // --- 素材库 ---
+        // --- 稳定素材库 ---
         const winIcon = "https://cdn-icons-png.flaticon.com/512/4213/4213958.png"; 
         const loseIcons = [
             "https://cdn-icons-png.flaticon.com/512/742/742752.png", 
@@ -282,7 +253,7 @@
         const hintButtonText = "感觉大奖就在前面...";
 
         let count = 0;
-        let rotation = 0; // 当前角度
+        let rotation = 0;
         const spinner = document.getElementById('spinner');
         const btn = document.getElementById('spinBtn');
         const modal = document.getElementById('modal');
@@ -290,29 +261,18 @@
         const mBtn = document.getElementById('closeBtn'); 
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
-        // --- 核心音效逻辑：只播放短促的咔哒声 ---
         function playTick() {
             if(audioCtx.state==='suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator(); 
-            const gain = audioCtx.createGain();
-            
-            // 使用三角波，听起来像硬物碰撞
+            const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
             osc.type = 'triangle';
-            // 频率从高到低快速扫过，模拟碰撞声
             osc.frequency.setValueAtTime(200, audioCtx.currentTime);
             osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.05);
-            
-            // 音量包络：瞬间响，瞬间停
             gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-            
-            osc.connect(gain); 
-            gain.connect(audioCtx.destination);
-            osc.start(); 
-            osc.stop(audioCtx.currentTime + 0.05);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.05);
         }
 
-        // 胜利音效
         function playWinSound() {
             const notes = [523, 659, 783, 1046];
             notes.forEach((f, i) => {
@@ -326,7 +286,6 @@
             });
         }
 
-        // 失败音效
         function playLoseSound() {
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
             osc.type = 'sawtooth';
@@ -338,70 +297,48 @@
             osc.start(); osc.stop(audioCtx.currentTime+0.3);
         }
 
-        // --- 缓动函数 (模拟物理惯性) ---
-        // 这是一个 "Ease Out Cubic" 曲线，开始快，慢慢减速
-        function easeOutCubic(t) {
-            return 1 - Math.pow(1 - t, 3);
-        }
+        function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
         function startSpin() {
             count++; 
             btn.disabled = true; 
             btn.innerText = "好运流转中...";
             
-            let target; 
-            let isWin = false;
+            let target; let isWin = false;
+            if(count <= 4) { target = 210; isWin = false; } 
+            else { target = 90; isWin = true; }
 
-            if(count <= 4) { target = 210; isWin = false; } // 空气
-            else { target = 90; isWin = true; } // 大奖
-
-            // 计算目标角度
-            // 之前的逻辑：rotation = rotation + (360*6) + offset - (rotation % 360)
             let circle = 360 * 6; 
             let offset = -target;
-            
-            const startRotation = rotation; // 记录开始时的角度
-            // 计算终点角度 (保证总是顺时针旋转)
+            const startRotation = rotation; 
             const finalRotation = rotation + circle + offset - (rotation % 360);
-            
-            // 更新全局 rotation 供下次使用
             rotation = finalRotation;
 
-            const duration = 4000; // 动画时长 4秒
+            const duration = 4000; 
             let startTime = null;
-            let lastSoundIndex = Math.floor(startRotation / 60); // 记录上次响声的位置
+            let lastSoundIndex = Math.floor(startRotation / 60); 
 
-            // --- 核心动画循环 (JS控制每一帧) ---
             function animate(timestamp) {
                 if (!startTime) startTime = timestamp;
                 const elapsed = timestamp - startTime;
-                const progress = Math.min(elapsed / duration, 1); // 进度 0 -> 1
-                
-                // 使用缓动函数计算当前进度的角度
+                const progress = Math.min(elapsed / duration, 1); 
                 const ease = easeOutCubic(progress);
                 const currentAngle = startRotation + (finalRotation - startRotation) * ease;
                 
-                // 更新 DOM
                 spinner.style.transform = `rotate(${currentAngle}deg)`;
                 
-                // --- 物理音效检测 ---
-                // 计算当前转到了第几个“格” (每60度一格)
                 const currentSoundIndex = Math.floor(currentAngle / 60);
-                
-                // 如果“格数”增加了，说明指针扫过了分隔线 -> 播放声音
                 if (currentSoundIndex > lastSoundIndex) {
                     playTick();
                     lastSoundIndex = currentSoundIndex;
                 }
 
                 if (progress < 1) {
-                    requestAnimationFrame(animate); // 继续下一帧
+                    requestAnimationFrame(animate); 
                 } else {
-                    // 动画结束
                     finishSpin(isWin);
                 }
             }
-            
             requestAnimationFrame(animate);
         }
 
@@ -410,25 +347,19 @@
                 playWinSound();
                 document.getElementById('m-title').innerText = "🎉 中大奖啦！";
                 document.getElementById('m-title').style.color = "#FF2D55";
-                
                 mIcon.src = winIcon;
                 mIcon.className = "anim-win"; 
-
                 document.getElementById('m-text').innerHTML = "天呐！你抽中了【神秘大奖】！<br><strong>快问老公是什么！</strong><br>(礼物属于你啦)";
-                
                 mBtn.innerText = "开心收下";
                 mBtn.style.background = "#FF2D55";
-
                 btn.innerText = "再次回味中奖瞬间 ❤️"; btn.style.background = "#34C759";
             } else {
                 playLoseSound();
                 document.getElementById('m-title').innerText = "遗憾离场...";
                 document.getElementById('m-title').style.color = "#666";
-                
                 const randomIcon = loseIcons[Math.floor(Math.random() * loseIcons.length)];
                 mIcon.src = randomIcon;
                 mIcon.className = "anim-lose"; 
-
                 document.getElementById('m-text').innerHTML = "哎呀！什么都没有抽到！<br><strong>老婆大人</strong>，再试一次，手气在后面！";
                 
                 if (count < 4) {
@@ -439,7 +370,6 @@
                     mBtn.innerText = hintButtonText;
                     mBtn.style.background = "#5856D6"; 
                 }
-
                 btn.innerText = `再抽一次 (第 ${count+1} 次)`; btn.style.background = "#007AFF";
             }
             modal.style.display = 'flex'; btn.disabled = false;
