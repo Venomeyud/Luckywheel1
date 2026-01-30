@@ -242,7 +242,6 @@
     </div>
 
     <script>
-        // --- 稳定素材库 ---
         const winIcon = "https://cdn-icons-png.flaticon.com/512/4213/4213958.png"; 
         const loseIcons = [
             "https://cdn-icons-png.flaticon.com/512/742/742752.png", 
@@ -252,8 +251,7 @@
         const loseButtonTexts = ["再试一次!", "我不信，再来!", "哼，继续抽!", "好运在后面!"];
         const hintButtonText = "感觉大奖就在前面...";
 
-        let count = 0;
-        let rotation = 0;
+        let count = 0; let rotation = 0;
         const spinner = document.getElementById('spinner');
         const btn = document.getElementById('spinBtn');
         const modal = document.getElementById('modal');
@@ -273,16 +271,31 @@
             osc.start(); osc.stop(audioCtx.currentTime + 0.05);
         }
 
+        // 【修改】闪亮登场音效 (Bling Bling)
         function playWinSound() {
-            const notes = [523, 659, 783, 1046];
-            notes.forEach((f, i) => {
-                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-                osc.frequency.value = f;
-                gain.gain.setValueAtTime(0, audioCtx.currentTime + i*0.1);
-                gain.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + i*0.1+0.1);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i*0.1+0.4);
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.start(audioCtx.currentTime + i*0.1); osc.stop(audioCtx.currentTime + i*0.1+0.5);
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const now = audioCtx.currentTime;
+            // 一组高音音阶，模拟“叮叮叮叮✨”的闪亮感
+            const notes = [1046.50, 1318.51, 1567.98, 2093.00, 2637.02, 3135.96]; 
+
+            notes.forEach((freq, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine'; // 正弦波听起来像铃声，很干净
+                osc.frequency.value = freq;
+
+                // 快速连续播放
+                const start = now + (i * 0.08);
+
+                gain.gain.setValueAtTime(0, start);
+                gain.gain.linearRampToValueAtTime(0.3, start + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.01, start + 0.8);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(start);
+                osc.stop(start + 0.8);
             });
         }
 
@@ -300,22 +313,16 @@
         function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
         function startSpin() {
-            count++; 
-            btn.disabled = true; 
-            btn.innerText = "好运流转中...";
-            
+            count++; btn.disabled = true; btn.innerText = "好运流转中...";
             let target; let isWin = false;
-            if(count <= 4) { target = 210; isWin = false; } 
-            else { target = 90; isWin = true; }
+            if(count <= 4) { target = 210; isWin = false; } else { target = 90; isWin = true; }
 
-            let circle = 360 * 6; 
-            let offset = -target;
+            let circle = 360 * 6; let offset = -target;
             const startRotation = rotation; 
             const finalRotation = rotation + circle + offset - (rotation % 360);
             rotation = finalRotation;
 
-            const duration = 4000; 
-            let startTime = null;
+            const duration = 4000; let startTime = null;
             let lastSoundIndex = Math.floor(startRotation / 60); 
 
             function animate(timestamp) {
@@ -324,57 +331,44 @@
                 const progress = Math.min(elapsed / duration, 1); 
                 const ease = easeOutCubic(progress);
                 const currentAngle = startRotation + (finalRotation - startRotation) * ease;
-                
                 spinner.style.transform = `rotate(${currentAngle}deg)`;
                 
                 const currentSoundIndex = Math.floor(currentAngle / 60);
                 if (currentSoundIndex > lastSoundIndex) {
-                    playTick();
-                    lastSoundIndex = currentSoundIndex;
+                    playTick(); lastSoundIndex = currentSoundIndex;
                 }
-
-                if (progress < 1) {
-                    requestAnimationFrame(animate); 
-                } else {
-                    finishSpin(isWin);
-                }
+                if (progress < 1) { requestAnimationFrame(animate); } else { finishSpin(isWin); }
             }
             requestAnimationFrame(animate);
         }
 
         function finishSpin(isWin) {
             if(isWin) {
-                playWinSound();
+                playWinSound(); // 播放新的闪亮音效
                 document.getElementById('m-title').innerText = "🎉 中大奖啦！";
                 document.getElementById('m-title').style.color = "#FF2D55";
-                mIcon.src = winIcon;
-                mIcon.className = "anim-win"; 
+                mIcon.src = winIcon; mIcon.className = "anim-win"; 
                 document.getElementById('m-text').innerHTML = "天呐！你抽中了【神秘大奖】！<br><strong>快问老公是什么！</strong><br>(礼物属于你啦)";
-                mBtn.innerText = "开心收下";
-                mBtn.style.background = "#FF2D55";
+                mBtn.innerText = "开心收下"; mBtn.style.background = "#FF2D55";
                 btn.innerText = "再次回味中奖瞬间 ❤️"; btn.style.background = "#34C759";
             } else {
                 playLoseSound();
                 document.getElementById('m-title').innerText = "遗憾离场...";
                 document.getElementById('m-title').style.color = "#666";
                 const randomIcon = loseIcons[Math.floor(Math.random() * loseIcons.length)];
-                mIcon.src = randomIcon;
-                mIcon.className = "anim-lose"; 
+                mIcon.src = randomIcon; mIcon.className = "anim-lose"; 
                 document.getElementById('m-text').innerHTML = "哎呀！什么都没有抽到！<br><strong>老婆大人</strong>，再试一次，手气在后面！";
                 
                 if (count < 4) {
                     const randomText = loseButtonTexts[Math.floor(Math.random() * loseButtonTexts.length)];
-                    mBtn.innerText = randomText;
-                    mBtn.style.background = "#007AFF"; 
+                    mBtn.innerText = randomText; mBtn.style.background = "#007AFF"; 
                 } else {
-                    mBtn.innerText = hintButtonText;
-                    mBtn.style.background = "#5856D6"; 
+                    mBtn.innerText = hintButtonText; mBtn.style.background = "#5856D6"; 
                 }
                 btn.innerText = `再抽一次 (第 ${count+1} 次)`; btn.style.background = "#007AFF";
             }
             modal.style.display = 'flex'; btn.disabled = false;
         }
-
         function closeModal() { modal.style.display = 'none'; }
     </script>
 </body>
