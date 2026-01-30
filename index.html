@@ -93,17 +93,19 @@
         
         .item-inner { 
             position: absolute; 
-            top: -138px;  
+            /* 为了适应更大的GIF图，位置稍微往外调了一点点 */
+            top: -140px;  
             left: -50px; 
             width: 100px; 
             text-align: center; 
         }
         
+        /* 【修改点】图片尺寸放大，适配动图 */
         .item img { 
-            width: 42px; height: 42px; 
+            width: 55px; height: 55px; /* 之前是42px，动图大点好看 */
             object-fit: contain; 
             display: block; 
-            margin: 0 auto 3px auto;
+            margin: 0 auto 2px auto;
             filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); 
         }
         
@@ -131,7 +133,6 @@
             border: 3px solid #fff;
         }
         
-        /* 视频样式适配 */
         .center-bear-img {
             width: 100%;
             height: 100%;
@@ -211,12 +212,47 @@
                 <div class="fan-bg fan-6"></div>
 
                 <div class="content-wrap">
-                    <div class="item" style="transform: rotate(30deg);"><div class="item-inner"><img src="https://img.alicdn.com/bao/uploaded/i4/2207692660945/O1CN0188939c20q6vXvQzXQ_!!2207692660945.jpg_300x300.jpg"><span>化妆品/保养品</span></div></div>
-                    <div class="item" style="transform: rotate(90deg);"><div class="item-inner"><img src="https://cdn-icons-png.flaticon.com/512/5726/5726678.png" style="filter: drop-shadow(0 0 5px gold); width:45px; height:45px;"><span style="color:#d63384">✨神秘大奖✨</span></div></div>
-                    <div class="item" style="transform: rotate(150deg);"><div class="item-inner"><img src="https://img.alicdn.com/bao/uploaded/i2/2213578026652/O1CN01h11B112CJIxZqGzXx_!!2213578026652.jpg_300x300.jpg"><span>红包388</span></div></div>
-                    <div class="item" style="transform: rotate(210deg);"><div class="item-inner"><img src="https://cdn-icons-png.flaticon.com/512/416/416835.png" style="opacity:0.5"><span style="color:#666">什么都没有<br>(空气)</span></div></div>
-                    <div class="item" style="transform: rotate(270deg);"><div class="item-inner"><img src="https://img.alicdn.com/bao/uploaded/i3/2849132476/O1CN01a8899c1s511zXzXzX_!!2849132476.jpg_300x300.jpg"><span>衣裤/裙子/内衣</span></div></div>
-                    <div class="item" style="transform: rotate(330deg);"><div class="item-inner"><img src="https://img.alicdn.com/bao/uploaded/i1/2200723576550/O1CN0188939c20q6vXvQzXQ_!!2200723576550.jpg_300x300.jpg"><span>羽绒服</span></div></div>
+                    <div class="item" style="transform: rotate(30deg);">
+                        <div class="item-inner">
+                            <img src="https://img.alicdn.com/bao/uploaded/i4/2207692660945/O1CN0188939c20q6vXvQzXQ_!!2207692660945.jpg_300x300.jpg">
+                            <span>化妆品/保养品</span>
+                        </div>
+                    </div>
+
+                    <div class="item" style="transform: rotate(90deg);">
+                        <div class="item-inner">
+                            <img src="https://cdn-icons-png.flaticon.com/512/5726/5726678.png" style="filter: drop-shadow(0 0 5px gold); width:45px; height:45px;">
+                            <span style="color:#d63384">✨神秘大奖✨</span>
+                        </div>
+                    </div>
+
+                    <div class="item" style="transform: rotate(150deg);">
+                        <div class="item-inner">
+                            <img src="hongbao.gif" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6451/6451877.png'">
+                            <span>红包388</span>
+                        </div>
+                    </div>
+
+                    <div class="item" style="transform: rotate(210deg);">
+                        <div class="item-inner">
+                            <img src="https://cdn-icons-png.flaticon.com/512/416/416835.png" style="opacity:0.5" class="anim-lose">
+                            <span style="color:#666">什么都没有<br>(空气)</span>
+                        </div>
+                    </div>
+
+                    <div class="item" style="transform: rotate(270deg);">
+                        <div class="item-inner">
+                            <img src="https://img.alicdn.com/bao/uploaded/i3/2849132476/O1CN01a8899c1s511zXzXzX_!!2849132476.jpg_300x300.jpg">
+                            <span>衣裤/裙子/内衣</span>
+                        </div>
+                    </div>
+
+                    <div class="item" style="transform: rotate(330deg);">
+                        <div class="item-inner">
+                            <img src="https://img.alicdn.com/bao/uploaded/i1/2200723576550/O1CN0188939c20q6vXvQzXQ_!!2200723576550.jpg_300x300.jpg">
+                            <span>羽绒服</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="center-circle">
@@ -263,19 +299,19 @@
         function playTick() {
             if(audioCtx.state==='suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-            
-            osc.type = 'sine'; // Q弹正弦波
-            osc.frequency.setValueAtTime(1200, audioCtx.currentTime); // 起始频率高
-            osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.1); // 快速下降
+            osc.type = 'sine'; // 正弦波
+            // 升调：从 400Hz 快速滑向 600Hz，听起来像气泡
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(600, audioCtx.currentTime + 0.08);
             
             gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
             
             osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.08);
         }
 
-        // --- 闪亮登场音效 (Bling Bling) ---
+        // --- 闪亮登场音效 ---
         function playWinSound() {
             if(audioCtx.state === 'suspended') audioCtx.resume();
             const now = audioCtx.currentTime;
@@ -342,7 +378,7 @@
 
         function finishSpin(isWin) {
             if(isWin) {
-                playWinSound(); // 闪亮音效
+                playWinSound(); 
                 document.getElementById('m-title').innerText = "🎉 中大奖啦！";
                 document.getElementById('m-title').style.color = "#FF2D55";
                 mIcon.src = winIcon; mIcon.className = "anim-win"; 
