@@ -215,7 +215,8 @@
 
     <script>
         const winIcon = "https://cdn-icons-png.flaticon.com/512/4213/4213958.png"; 
-        const loseIcons = ["https://cdn-icons-png.flaticon.com/512/742/742752.png", "https://cdn-icons-png.flaticon.com/512/725/725099.png"];
+        // 【移除旧的随机图标数组，不再需要了】
+        // const loseIcons = [...]; 
         const loseButtonTexts = ["再试一次!", "我不信，再来!", "哼，继续抽!", "好运在后面!"];
         const hintButtonText = "感觉大奖就在前面...";
 
@@ -310,8 +311,11 @@
                 playLoseSound();
                 document.getElementById('m-title').innerText = "遗憾离场...";
                 document.getElementById('m-title').style.color = "#666";
-                const randomIcon = loseIcons[Math.floor(Math.random() * loseIcons.length)];
-                mIcon.src = randomIcon; mIcon.className = "anim-lose"; 
+                
+                // 【修改点】这里改成了固定使用 sad.gif，不再随机
+                mIcon.src = "sad.gif"; 
+                mIcon.className = "anim-lose"; 
+                
                 document.getElementById('m-text').innerHTML = "哎呀！什么都没有抽到！<br><strong>老婆大人</strong>，再试一次，手气在后面！";
                 
                 if (count < 4) {
