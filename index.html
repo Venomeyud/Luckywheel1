@@ -87,7 +87,15 @@
         }
         @keyframes pop { from{transform: scale(0.8); opacity: 0;} to{transform: scale(1); opacity: 1;} }
 
-        #m-icon { width: 100px; height: 100px; object-fit: contain; margin: 10px auto; display: block; }
+        /* 【修改点】弹窗里的图片变大了 */
+        #m-icon { 
+            width: 160px; /* 原来是 100px */
+            height: 160px; /* 原来是 100px */
+            object-fit: contain; 
+            margin: 20px auto; /* 增加了上下间距，防止挡字 */
+            display: block; 
+        }
+        
         .close-btn {
             background: #FF2D55; color: white; border: none; padding: 12px 30px; border-radius: 20px;
             font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer;
@@ -96,47 +104,21 @@
 
         /* --- 💌 信件弹窗样式 --- */
         #letterModalBox {
-            /* 1. 这里是信件的背景图设置 */
             background-image: url('photo.jpg'); 
-            background-size: cover;
-            background-position: center;
-            height: 60vh; /* 占屏幕高度的60% */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end; /* 内容靠下 */
-            padding: 0;
-            overflow: hidden;
-            border: 4px solid #fff;
+            background-size: cover; background-position: center; height: 60vh; display: flex; flex-direction: column;
+            justify-content: flex-end; padding: 0; overflow: hidden; border: 4px solid #fff;
         }
-        
         .letter-content {
-            background: rgba(255, 255, 255, 0.9); /* 半透明白色底，保证字能看清 */
-            padding: 20px;
-            border-radius: 20px 20px 0 0; /* 上方圆角 */
-            width: 100%;
-            box-sizing: border-box;
-            max-height: 70%; /* 最多占70%高度 */
-            overflow-y: auto; /* 内容多了可以滚 */
+            background: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 20px 20px 0 0; width: 100%;
+            box-sizing: border-box; max-height: 70%; overflow-y: auto;
         }
-
         .letter-text {
-            text-align: left;
-            font-size: 15px;
-            line-height: 1.8;
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: 500;
-            white-space: pre-wrap; /* 保留换行 */
+            text-align: left; font-size: 15px; line-height: 1.8; color: #333; margin-bottom: 20px; font-weight: 500; white-space: pre-wrap;
         }
 
         /* --- 🎁 快递码图片样式 --- */
         #code-img {
-            width: 100%;
-            border-radius: 10px;
-            border: 2px dashed #FF2D55;
-            padding: 5px;
-            box-sizing: border-box;
-            margin-bottom: 10px;
+            width: 100%; border-radius: 10px; border: 2px dashed #FF2D55; padding: 5px; box-sizing: border-box; margin-bottom: 10px;
         }
 
     </style>
@@ -187,17 +169,17 @@
             <div class="letter-content">
                 <h3 style="margin-top:0; color:#FF2D55;">To: 最爱的老婆 💌</h3>
                 <div class="letter-text" id="myLetterText">
-                    亲爱的雯雯：
-                    
-                    三周年快乐！🎉
-                    这封信的背景是我们最美的一张合照。
-                    
-                    这三年有你真好，
-                    未来的每一天也要一起走下去！
-                    
-                    这是我为你准备的一份小惊喜，
-                    希望你会喜欢~ ❤️
-                    </div>
+亲爱的雯雯：
+
+三周年快乐！🎉
+这封信的背景是我们最美的一张合照。
+
+这三年有你真好，
+未来的每一天也要一起走下去！
+
+这是我为你准备的一份小惊喜，
+希望你会喜欢~ ❤️
+                </div>
                 <button class="close-btn" onclick="openGiftCode()">🎁 领取神秘礼物</button>
             </div>
         </div>
@@ -215,8 +197,6 @@
 
     <script>
         const winIcon = "https://cdn-icons-png.flaticon.com/512/4213/4213958.png"; 
-        // 【移除旧的随机图标数组，不再需要了】
-        // const loseIcons = [...]; 
         const loseButtonTexts = ["再试一次!", "我不信，再来!", "哼，继续抽!", "好运在后面!"];
         const hintButtonText = "感觉大奖就在前面...";
 
@@ -230,18 +210,14 @@
         const mBtn = document.getElementById('closeBtn'); 
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
-        // 处理主按钮点击
         function handleButtonClick() {
             if (btn.classList.contains('envelope-btn')) {
-                // 如果已经是信封按钮，点击打开信件
                 letterModal.style.display = 'flex';
             } else {
-                // 否则开始抽奖
                 startSpin();
             }
         }
 
-        // 音效相关
         function playTick() {
             if(audioCtx.state==='suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
@@ -298,7 +274,7 @@
         }
 
         function finishSpin(isWin) {
-            isGrandPrize = isWin; // 记录是否中大奖
+            isGrandPrize = isWin; 
             if(isWin) {
                 playWinSound(); 
                 document.getElementById('m-title').innerText = "🎉 中大奖啦！";
@@ -311,11 +287,8 @@
                 playLoseSound();
                 document.getElementById('m-title').innerText = "遗憾离场...";
                 document.getElementById('m-title').style.color = "#666";
-                
-                // 【修改点】这里改成了固定使用 sad.gif，不再随机
                 mIcon.src = "sad.gif"; 
                 mIcon.className = "anim-lose"; 
-                
                 document.getElementById('m-text').innerHTML = "哎呀！什么都没有抽到！<br><strong>老婆大人</strong>，再试一次，手气在后面！";
                 
                 if (count < 4) {
@@ -331,20 +304,18 @@
 
         function closeResultModal() {
             resultModal.style.display = 'none';
-            // 如果中了大奖，关闭弹窗后，按钮变成信封
             if (isGrandPrize) {
                 btn.innerText = "💌 亲启信件";
-                btn.className = "envelope-btn"; // 变成粉色
+                btn.className = "envelope-btn"; 
                 btn.style.background = "#FF2D55";
-                btn.onclick = handleButtonClick; // 确保绑定
-                // 停止自动旋转音效，如果有的话
+                btn.onclick = handleButtonClick; 
             }
         }
 
         function openGiftCode() {
-            letterModal.style.display = 'none'; // 关掉信件
-            codeModal.style.display = 'flex';   // 打开礼物码
-            playWinSound(); // 再放一次胜利音效
+            letterModal.style.display = 'none'; 
+            codeModal.style.display = 'flex';   
+            playWinSound(); 
         }
     </script>
 </body>
