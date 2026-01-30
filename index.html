@@ -190,14 +190,6 @@
             border-radius: 20px; font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer;
             transition: background 0.3s;
         }
-        
-        /* 版本标记 */
-        .version-tag {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #999;
-            opacity: 0.8;
-        }
 
     </style>
 </head>
@@ -238,7 +230,6 @@
         </div>
 
         <button id="spinBtn" onclick="startSpin()">开始抽奖</button>
-        <div class="version-tag">当前版本：蛋仔派对音效版 🎵</div>
     </div>
 
     <div id="modal">
@@ -268,20 +259,15 @@
         const mBtn = document.getElementById('closeBtn'); 
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
-        // --- 蛋仔风格音效核心代码 ---
+        // --- 蛋仔派对 Q弹气泡音效 ---
         function playTick() {
             if(audioCtx.state==='suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
             
-            // 使用正弦波，声音更圆润可爱，像玩具气泡
-            osc.type = 'sine';
+            osc.type = 'sine'; // Q弹正弦波
+            osc.frequency.setValueAtTime(1200, audioCtx.currentTime); // 起始频率高
+            osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.1); // 快速下降
             
-            // 频率更高，且快速下降，模拟“啾”或“啵”的声音
-            // 从 1200Hz 快速降到 200Hz
-            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.1);
-            
-            // 音量包络：短促有力
             gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
             
@@ -293,7 +279,6 @@
         function playWinSound() {
             if(audioCtx.state === 'suspended') audioCtx.resume();
             const now = audioCtx.currentTime;
-            // 闪亮的音阶 (高频碎音)
             const notes = [1046.50, 1318.51, 1567.98, 2093.00, 2637.02, 3135.96]; 
 
             notes.forEach((freq, i) => {
@@ -302,7 +287,7 @@
                 osc.type = 'sine'; 
                 osc.frequency.value = freq;
 
-                const start = now + (i * 0.08); // 快速连续播放
+                const start = now + (i * 0.08); 
                 gain.gain.setValueAtTime(0, start);
                 gain.gain.linearRampToValueAtTime(0.3, start + 0.02);
                 gain.gain.exponentialRampToValueAtTime(0.01, start + 0.8);
@@ -314,7 +299,7 @@
 
         function playLoseSound() {
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-            osc.type = 'sawtooth'; // 锯齿波，比较粗糙，适合失败音效
+            osc.type = 'sawtooth';
             osc.frequency.setValueAtTime(150, audioCtx.currentTime);
             osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime+0.3);
             gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
