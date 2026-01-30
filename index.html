@@ -69,7 +69,8 @@
             width: 100%; height: 100%;
             position: relative;
             border-radius: 50%;
-            border: 8px solid #fff; 
+            /* 【修改点】这里把原来的白色 #fff 改成了适配背景的樱花粉色 #FFB7C5 */
+            border: 8px solid #FFB7C5; 
             box-sizing: border-box;
             background: #fff;
             overflow: hidden;
@@ -242,8 +243,8 @@
 
                     <div class="item" style="transform: rotate(210deg);">
                         <div class="item-inner">
-                            <img src="https://cdn-icons-png.flaticon.com/512/416/416835.png" style="opacity:0.5" class="anim-lose">
-                            <span style="color:#666">什么都没有<br>(空气)</span>
+                            <img src="wind.gif" onerror="this.src='https://cdn-icons-png.flaticon.com/512/416/416835.png'" style="opacity:0.7" class="anim-lose">
+                            <span style="color:#666">什么都没有</span>
                         </div>
                     </div>
 
