@@ -10,213 +10,133 @@
             font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
             background-color: #E6E6FA; 
             background-image: linear-gradient(135deg, #E6E6FA 0%, #B0C4DE 100%);
-            background-size: cover; 
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            color: #000;
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; margin: 0; overflow: hidden; color: #000;
         }
-        
-        body::before {
-            content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(255,255,255, 0.25); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            z-index: -1;
-        }
+        body::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255, 0.25); backdrop-filter: blur(5px); z-index: -1; }
 
         /* --- 2. 卡片容器 --- */
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: 30px;
-            padding: 30px 20px;
-            width: 90%; max-width: 380px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.6);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.85); border-radius: 30px; padding: 30px 20px;
+            width: 90%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center; border: 1px solid rgba(255,255,255,0.6);
+            backdrop-filter: blur(10px);
         }
-
         h1 { margin: 0; font-size: 24px; font-weight: 800; color: #1c1c1e; }
         .subtitle { margin-top: 8px; margin-bottom: 25px; font-size: 14px; color: #666; }
 
-        /* --- 3. 转盘外壳 --- */
-        .wheel-wrapper {
-            position: relative;
-            width: 320px;
-            height: 320px;
-            margin: 0 auto 30px auto;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-        }
-
-        /* 指针 */
+        /* --- 3. 转盘部分 --- */
+        .wheel-wrapper { position: relative; width: 320px; height: 320px; margin: 0 auto 30px auto; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); }
         .pointer {
-            position: absolute;
-            top: -25px; left: 50%;
-            transform: translateX(-50%);
-            width: 40px; height: 50px;
-            z-index: 50;
+            position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 40px; height: 50px; z-index: 50;
             background-image: url("data:image/svg+xml,%3Csvg width='40' height='50' viewBox='0 0 40 50' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 50L0 10C0 4.5 4.5 0 10 0H30C35.5 0 40 4.5 40 10L20 50Z' fill='%23FF3B30'/%3E%3C/svg%3E");
             background-size: contain; background-repeat: no-repeat;
         }
-
-        /* --- 4. 转动部分 --- */
-        #spinner {
-            width: 100%; height: 100%;
-            position: relative;
-            border-radius: 50%;
-            /* 轮盘外边框颜色：樱花粉 */
-            border: 8px solid #FFB7C5; 
-            box-sizing: border-box;
-            background: #fff;
-            overflow: hidden;
-        }
-
-        /* 扇形背景色 */
-        .fan-bg { position: absolute; top: 0; right: 0; width: 50%; height: 50%; transform-origin: 0% 100%; }
-        .fan-1, .fan-3, .fan-5 { background: #FFFBE6; } 
-        .fan-2, .fan-4, .fan-6 { background: #FFDEE9; } 
+        #spinner { width: 100%; height: 100%; position: relative; border-radius: 50%; border: 8px solid #FFB7C5; box-sizing: border-box; background: #fff; overflow: hidden; }
         
-        .fan-1 { transform: rotate(0deg) skewY(-30deg); }
-        .fan-2 { transform: rotate(60deg) skewY(-30deg); }
-        .fan-3 { transform: rotate(120deg) skewY(-30deg); }
-        .fan-4 { transform: rotate(180deg) skewY(-30deg); }
-        .fan-5 { transform: rotate(240deg) skewY(-30deg); }
-        .fan-6 { transform: rotate(300deg) skewY(-30deg); }
+        .fan-bg { position: absolute; top: 0; right: 0; width: 50%; height: 50%; transform-origin: 0% 100%; }
+        .fan-1, .fan-3, .fan-5 { background: #FFFBE6; } .fan-2, .fan-4, .fan-6 { background: #FFDEE9; } 
+        .fan-1 { transform: rotate(0deg) skewY(-30deg); } .fan-2 { transform: rotate(60deg) skewY(-30deg); }
+        .fan-3 { transform: rotate(120deg) skewY(-30deg); } .fan-4 { transform: rotate(180deg) skewY(-30deg); }
+        .fan-5 { transform: rotate(240deg) skewY(-30deg); } .fan-6 { transform: rotate(300deg) skewY(-30deg); }
 
-        /* --- 内容层 --- */
         .content-wrap { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
         .item { position: absolute; top: 50%; left: 50%; width: 0; height: 0; }
-        
-        .item-inner { 
-            position: absolute; 
-            top: -140px;  
-            left: -50px; 
-            width: 100px; 
-            text-align: center; 
-        }
-        
-        /* 图片适配动图尺寸 */
-        .item img { 
-            width: 55px; height: 55px; 
-            object-fit: contain; 
-            display: block; 
-            margin: 0 auto 2px auto;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); 
-        }
-        
-        .item span { 
-            display: block; 
-            font-size: 13px; 
-            line-height: 1.2; 
-            font-weight: 900; 
-            color: #333; 
-            text-shadow: 1px 1px 0 rgba(255,255,255,0.9); 
-        }
+        .item-inner { position: absolute; top: -140px; left: -50px; width: 100px; text-align: center; }
+        .item img { width: 55px; height: 55px; object-fit: contain; display: block; margin: 0 auto 2px auto; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1)); }
+        .item span { display: block; font-size: 13px; line-height: 1.2; font-weight: 900; color: #333; text-shadow: 1px 1px 0 rgba(255,255,255,0.9); }
 
-        /* --- 中心视频容器 --- */
         .center-circle {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70px; height: 70px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            z-index: 10;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden; 
-            border: 3px solid #fff;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70px; height: 70px; background: #fff; border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 10; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 3px solid #fff;
         }
-        
-        .center-bear-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scale(1.1); 
-        }
+        .center-bear-img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); }
 
-        /* --- 5. 按钮动画定义 (呼吸效果) --- */
-        @keyframes btnScale {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.08); } /* 稍微放大 */
-            100% { transform: scale(1); }
-        }
+        /* --- 动画效果 --- */
+        @keyframes btnScale { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
+        .anim-win { animation: pulseWin 1s infinite; } @keyframes pulseWin { 0% { transform: scale(1); } 50% { transform: scale(1.15) rotate(5deg); } 100% { transform: scale(1); } }
+        .anim-lose { animation: shakeLose 0.8s infinite ease-in-out; } @keyframes shakeLose { 0% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); } 50% { transform: rotate(0deg); } 75% { transform: rotate(10deg); } 100% { transform: rotate(0deg); } }
+        .anim-zoom { animation: zoomPulse 1.5s infinite ease-in-out; } @keyframes zoomPulse { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
-        /* 主按钮样式 */
+        /* --- 按钮样式 --- */
         #spinBtn {
-            width: 80%; padding: 16px; border-radius: 20px; border: none;
-            background: #007AFF; color: white; font-size: 18px; font-weight: bold;
-            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3); cursor: pointer;
-            transition: all 0.2s;
-            /* 应用呼吸动画 */
-            animation: btnScale 1.5s infinite ease-in-out;
+            width: 80%; padding: 16px; border-radius: 20px; border: none; background: #007AFF; color: white; font-size: 18px; font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3); cursor: pointer; transition: all 0.2s; animation: btnScale 1.5s infinite ease-in-out;
         }
-        
         #spinBtn:active { transform: scale(0.96); animation: none; }
-        
-        /* 禁用状态停止动画 */
-        #spinBtn:disabled { 
-            background: #ccc; 
-            box-shadow: none; 
-            transform: none; 
-            animation: none; 
+        #spinBtn:disabled { background: #ccc; box-shadow: none; transform: none; animation: none; }
+
+        /* 信封按钮样式 (中奖后显示) */
+        .envelope-btn {
+            background: #FF2D55 !important; /* 爱的粉红色 */
+            box-shadow: 0 8px 20px rgba(255, 45, 85, 0.4) !important;
         }
 
-        /* --- 6. 弹窗 --- */
-        #modal {
+        /* --- 弹窗通用 --- */
+        .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-            z-index: 100; align-items: center; justify-content: center;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 100;
+            align-items: center; justify-content: center;
         }
         .modal-box {
-            background: rgba(255,255,255,0.98); width: 75%; max-width: 300px;
-            padding: 30px; border-radius: 25px; text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.98); width: 80%; max-width: 320px; padding: 30px 20px;
+            border-radius: 25px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
         }
         @keyframes pop { from{transform: scale(0.8); opacity: 0;} to{transform: scale(1); opacity: 1;} }
-        
-        #m-icon {
-            width: 100px; height: 100px; object-fit: contain;
-            margin: 10px auto; display: block;
+
+        #m-icon { width: 100px; height: 100px; object-fit: contain; margin: 10px auto; display: block; }
+        .close-btn {
+            background: #FF2D55; color: white; border: none; padding: 12px 30px; border-radius: 20px;
+            font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer;
+            transition: background 0.3s; animation: btnScale 1.2s infinite ease-in-out;
         }
 
-        /* --- CSS动画效果 --- */
-        .anim-win { animation: pulseWin 1s infinite; }
-        @keyframes pulseWin {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15) rotate(5deg); }
-            100% { transform: scale(1); }
+        /* --- 💌 信件弹窗样式 --- */
+        #letterModalBox {
+            /* 1. 这里是信件的背景图设置 */
+            background-image: url('photo.jpg'); 
+            background-size: cover;
+            background-position: center;
+            height: 60vh; /* 占屏幕高度的60% */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* 内容靠下 */
+            padding: 0;
+            overflow: hidden;
+            border: 4px solid #fff;
         }
         
-        .anim-lose { animation: shakeLose 0.8s infinite ease-in-out; }
-        @keyframes shakeLose {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(-10deg); }
-            50% { transform: rotate(0deg); }
-            75% { transform: rotate(10deg); }
-            100% { transform: rotate(0deg); }
+        .letter-content {
+            background: rgba(255, 255, 255, 0.9); /* 半透明白色底，保证字能看清 */
+            padding: 20px;
+            border-radius: 20px 20px 0 0; /* 上方圆角 */
+            width: 100%;
+            box-sizing: border-box;
+            max-height: 70%; /* 最多占70%高度 */
+            overflow-y: auto; /* 内容多了可以滚 */
         }
-        
-        /* 神秘大奖缩放动画 */
-        .anim-zoom { animation: zoomPulse 1.5s infinite ease-in-out; }
-        @keyframes zoomPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
+
+        .letter-text {
+            text-align: left;
+            font-size: 15px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+            white-space: pre-wrap; /* 保留换行 */
         }
-        
-        /* 弹窗按钮样式 (同样应用呼吸动画) */
-        .close-btn {
-            background: #FF2D55; color: white; border: none; padding: 12px 30px;
-            border-radius: 20px; font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer;
-            transition: background 0.3s;
-            animation: btnScale 1.2s infinite ease-in-out;
+
+        /* --- 🎁 快递码图片样式 --- */
+        #code-img {
+            width: 100%;
+            border-radius: 10px;
+            border: 2px dashed #FF2D55;
+            padding: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
         }
 
     </style>
@@ -230,142 +150,122 @@
         <div class="wheel-wrapper">
             <div class="pointer"></div>
             <div id="spinner">
-                
-                <div class="fan-bg fan-1"></div>
-                <div class="fan-bg fan-2"></div>
-                <div class="fan-bg fan-3"></div>
-                <div class="fan-bg fan-4"></div>
-                <div class="fan-bg fan-5"></div>
-                <div class="fan-bg fan-6"></div>
+                <div class="fan-bg fan-1"></div><div class="fan-bg fan-2"></div><div class="fan-bg fan-3"></div>
+                <div class="fan-bg fan-4"></div><div class="fan-bg fan-5"></div><div class="fan-bg fan-6"></div>
 
                 <div class="content-wrap">
-                    <div class="item" style="transform: rotate(30deg);">
-                        <div class="item-inner">
-                            <img src="makeup.gif" onerror="this.src='https://img.alicdn.com/bao/uploaded/i4/2207692660945/O1CN0188939c20q6vXvQzXQ_!!2207692660945.jpg_300x300.jpg'">
-                            <span>化妆品/保养品</span>
-                        </div>
-                    </div>
-
-                    <div class="item" style="transform: rotate(90deg);">
-                        <div class="item-inner">
-                            <img class="anim-zoom" src="https://cdn-icons-png.flaticon.com/512/5726/5726678.png" style="filter: drop-shadow(0 0 5px gold); width:45px; height:45px;">
-                            <span style="color:#d63384">✨神秘大奖✨</span>
-                        </div>
-                    </div>
-
-                    <div class="item" style="transform: rotate(150deg);">
-                        <div class="item-inner">
-                            <img src="hongbao.gif" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6451/6451877.png'">
-                            <span>红包388</span>
-                        </div>
-                    </div>
-
-                    <div class="item" style="transform: rotate(210deg);">
-                        <div class="item-inner">
-                            <img src="wind.gif" onerror="this.src='https://cdn-icons-png.flaticon.com/512/416/416835.png'" style="opacity:0.7" class="anim-lose">
-                            <span style="color:#666">什么都没有</span>
-                        </div>
-                    </div>
-
-                    <div class="item" style="transform: rotate(270deg);">
-                        <div class="item-inner">
-                            <img src="clothes.gif" onerror="this.src='https://img.alicdn.com/bao/uploaded/i3/2849132476/O1CN01a8899c1s511zXzXzX_!!2849132476.jpg_300x300.jpg'">
-                            <span>衣裤/裙子/内衣</span>
-                        </div>
-                    </div>
-
-                    <div class="item" style="transform: rotate(330deg);">
-                        <div class="item-inner">
-                            <img src="shoes.gif" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2742/2742674.png'">
-                            <span>鞋子</span>
-                        </div>
-                    </div>
+                    <div class="item" style="transform: rotate(30deg);"><div class="item-inner"><img src="makeup.gif" onerror="this.src='https://img.alicdn.com/bao/uploaded/i4/2207692660945/O1CN0188939c20q6vXvQzXQ_!!2207692660945.jpg_300x300.jpg'"><span>化妆品/保养品</span></div></div>
+                    <div class="item" style="transform: rotate(90deg);"><div class="item-inner"><img class="anim-zoom" src="https://cdn-icons-png.flaticon.com/512/5726/5726678.png" style="filter: drop-shadow(0 0 5px gold); width:45px; height:45px;"><span style="color:#d63384">✨神秘大奖✨</span></div></div>
+                    <div class="item" style="transform: rotate(150deg);"><div class="item-inner"><img src="hongbao.gif" onerror="this.src='https://cdn-icons-png.flaticon.com/512/6451/6451877.png'"><span>红包388</span></div></div>
+                    <div class="item" style="transform: rotate(210deg);"><div class="item-inner"><img src="wind.gif" onerror="this.src='https://cdn-icons-png.flaticon.com/512/416/416835.png'" style="opacity:0.7" class="anim-lose"><span style="color:#666">什么都没有</span></div></div>
+                    <div class="item" style="transform: rotate(270deg);"><div class="item-inner"><img src="clothes.gif" onerror="this.src='https://img.alicdn.com/bao/uploaded/i3/2849132476/O1CN01a8899c1s511zXzXzX_!!2849132476.jpg_300x300.jpg'"><span>衣裤/裙子/内衣</span></div></div>
+                    <div class="item" style="transform: rotate(330deg);"><div class="item-inner"><img src="shoes.gif" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2742/2742674.png'"><span>鞋子</span></div></div>
                 </div>
 
                 <div class="center-circle">
                     <video class="center-bear-img" autoplay loop muted playsinline poster="https://cdn-icons-png.flaticon.com/512/3769/3769037.png">
-                        <source src="bear.mp4" type="video/mp4">
-                        <source src="bear.MP4" type="video/mp4">
-                        <source src="e8eb6841ebbe9db9f8b6ff22b2e123d9_720w.cmfv" type="video/mp4">
+                        <source src="bear.mp4" type="video/mp4"><source src="bear.MP4" type="video/mp4"><source src="e8eb6841ebbe9db9f8b6ff22b2e123d9_720w.cmfv" type="video/mp4">
                     </video>
                 </div>
             </div>
         </div>
 
-        <button id="spinBtn" onclick="startSpin()">开始抽奖</button>
+        <button id="spinBtn" onclick="handleButtonClick()">开始抽奖</button>
     </div>
 
-    <div id="modal">
+    <div id="resultModal" class="modal-overlay">
         <div class="modal-box">
             <h2 id="m-title">中奖啦</h2>
             <img id="m-icon" src="" alt="">
             <p id="m-text" style="color:#666; line-height:1.6;"></p>
-            <button id="closeBtn" class="close-btn" onclick="closeModal()">开心收下</button>
+            <button id="closeBtn" class="close-btn" onclick="closeResultModal()">开心收下</button>
+        </div>
+    </div>
+
+    <div id="letterModal" class="modal-overlay">
+        <div class="modal-box" id="letterModalBox">
+            <div class="letter-content">
+                <h3 style="margin-top:0; color:#FF2D55;">To: 最爱的老婆 💌</h3>
+                <div class="letter-text" id="myLetterText">
+                    亲爱的雯雯：
+                    
+                    三周年快乐！🎉
+                    这封信的背景是我们最美的一张合照。
+                    
+                    这三年有你真好，
+                    未来的每一天也要一起走下去！
+                    
+                    这是我为你准备的一份小惊喜，
+                    希望你会喜欢~ ❤️
+                    </div>
+                <button class="close-btn" onclick="openGiftCode()">🎁 领取神秘礼物</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="codeModal" class="modal-overlay">
+        <div class="modal-box">
+            <h2 style="color:#FF2D55;">神秘礼物已送达！</h2>
+            <p style="color:#666; font-size:14px;">截图保存下方的取件码/快递单</p>
+            <img id="code-img" src="code.jpg" class="anim-zoom" alt="礼物码">
+            <p style="margin-bottom:20px;">❤️ 爱你哟 ❤️</p>
+            <button class="close-btn" onclick="location.reload()">再玩一次</button>
         </div>
     </div>
 
     <script>
         const winIcon = "https://cdn-icons-png.flaticon.com/512/4213/4213958.png"; 
-        const loseIcons = [
-            "https://cdn-icons-png.flaticon.com/512/742/742752.png", 
-            "https://cdn-icons-png.flaticon.com/512/725/725099.png", 
-            "https://cdn-icons-png.flaticon.com/512/742/742760.png"
-        ];
+        const loseIcons = ["https://cdn-icons-png.flaticon.com/512/742/742752.png", "https://cdn-icons-png.flaticon.com/512/725/725099.png"];
         const loseButtonTexts = ["再试一次!", "我不信，再来!", "哼，继续抽!", "好运在后面!"];
         const hintButtonText = "感觉大奖就在前面...";
 
-        let count = 0; let rotation = 0;
+        let count = 0; let rotation = 0; let isGrandPrize = false;
         const spinner = document.getElementById('spinner');
         const btn = document.getElementById('spinBtn');
-        const modal = document.getElementById('modal');
+        const resultModal = document.getElementById('resultModal');
+        const letterModal = document.getElementById('letterModal');
+        const codeModal = document.getElementById('codeModal');
         const mIcon = document.getElementById('m-icon');
         const mBtn = document.getElementById('closeBtn'); 
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
-        // --- 蛋仔派对 Q弹气泡音效 ---
+        // 处理主按钮点击
+        function handleButtonClick() {
+            if (btn.classList.contains('envelope-btn')) {
+                // 如果已经是信封按钮，点击打开信件
+                letterModal.style.display = 'flex';
+            } else {
+                // 否则开始抽奖
+                startSpin();
+            }
+        }
+
+        // 音效相关
         function playTick() {
             if(audioCtx.state==='suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-            osc.type = 'sine'; 
-            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-            osc.frequency.linearRampToValueAtTime(600, audioCtx.currentTime + 0.08);
-            gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+            osc.type = 'sine'; osc.frequency.setValueAtTime(400, audioCtx.currentTime); osc.frequency.linearRampToValueAtTime(600, audioCtx.currentTime + 0.08);
+            gain.gain.setValueAtTime(0.5, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+            osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.08);
         }
-
-        // --- 闪亮登场音效 ---
         function playWinSound() {
             if(audioCtx.state === 'suspended') audioCtx.resume();
             const now = audioCtx.currentTime;
             const notes = [1046.50, 1318.51, 1567.98, 2093.00, 2637.02, 3135.96]; 
-
             notes.forEach((freq, i) => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine'; 
-                osc.frequency.value = freq;
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                osc.type = 'sine'; osc.frequency.value = freq;
                 const start = now + (i * 0.08); 
-                gain.gain.setValueAtTime(0, start);
-                gain.gain.linearRampToValueAtTime(0.3, start + 0.02);
-                gain.gain.exponentialRampToValueAtTime(0.01, start + 0.8);
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.start(start); osc.stop(start + 0.8);
+                gain.gain.setValueAtTime(0, start); gain.gain.linearRampToValueAtTime(0.3, start + 0.02); gain.gain.exponentialRampToValueAtTime(0.01, start + 0.8);
+                osc.connect(gain); gain.connect(audioCtx.destination); osc.start(start); osc.stop(start + 0.8);
             });
         }
-
         function playLoseSound() {
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-            osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime+0.3);
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime+0.3);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime+0.3);
+            osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, audioCtx.currentTime); osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime+0.3);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime); gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime+0.3);
+            osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime+0.3);
         }
-
         function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
         function startSpin() {
@@ -390,15 +290,14 @@
                 spinner.style.transform = `rotate(${currentAngle}deg)`;
                 
                 const currentSoundIndex = Math.floor(currentAngle / 60);
-                if (currentSoundIndex > lastSoundIndex) {
-                    playTick(); lastSoundIndex = currentSoundIndex;
-                }
+                if (currentSoundIndex > lastSoundIndex) { playTick(); lastSoundIndex = currentSoundIndex; }
                 if (progress < 1) { requestAnimationFrame(animate); } else { finishSpin(isWin); }
             }
             requestAnimationFrame(animate);
         }
 
         function finishSpin(isWin) {
+            isGrandPrize = isWin; // 记录是否中大奖
             if(isWin) {
                 playWinSound(); 
                 document.getElementById('m-title').innerText = "🎉 中大奖啦！";
@@ -423,9 +322,26 @@
                 }
                 btn.innerText = `再抽一次 (第 ${count+1} 次)`; btn.style.background = "#007AFF";
             }
-            modal.style.display = 'flex'; btn.disabled = false;
+            resultModal.style.display = 'flex'; btn.disabled = false;
         }
-        function closeModal() { modal.style.display = 'none'; }
+
+        function closeResultModal() {
+            resultModal.style.display = 'none';
+            // 如果中了大奖，关闭弹窗后，按钮变成信封
+            if (isGrandPrize) {
+                btn.innerText = "💌 亲启信件";
+                btn.className = "envelope-btn"; // 变成粉色
+                btn.style.background = "#FF2D55";
+                btn.onclick = handleButtonClick; // 确保绑定
+                // 停止自动旋转音效，如果有的话
+            }
+        }
+
+        function openGiftCode() {
+            letterModal.style.display = 'none'; // 关掉信件
+            codeModal.style.display = 'flex';   // 打开礼物码
+            playWinSound(); // 再放一次胜利音效
+        }
     </script>
 </body>
 </html>
