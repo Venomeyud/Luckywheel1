@@ -69,7 +69,7 @@
             width: 100%; height: 100%;
             position: relative;
             border-radius: 50%;
-            /* 【修改点】这里把原来的白色 #fff 改成了适配背景的樱花粉色 #FFB7C5 */
+            /* 轮盘外边框颜色：樱花粉 */
             border: 8px solid #FFB7C5; 
             box-sizing: border-box;
             background: #fff;
@@ -140,15 +140,32 @@
             transform: scale(1.1); 
         }
 
-        /* --- 5. 按钮 --- */
+        /* --- 5. 按钮动画定义 (呼吸效果) --- */
+        @keyframes btnScale {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); } /* 稍微放大 */
+            100% { transform: scale(1); }
+        }
+
+        /* 主按钮样式 */
         #spinBtn {
             width: 80%; padding: 16px; border-radius: 20px; border: none;
             background: #007AFF; color: white; font-size: 18px; font-weight: bold;
             box-shadow: 0 8px 20px rgba(0, 122, 255, 0.3); cursor: pointer;
             transition: all 0.2s;
+            /* 应用呼吸动画 */
+            animation: btnScale 1.5s infinite ease-in-out;
         }
-        #spinBtn:active { transform: scale(0.96); }
-        #spinBtn:disabled { background: #ccc; box-shadow: none; transform: none;}
+        
+        #spinBtn:active { transform: scale(0.96); animation: none; }
+        
+        /* 禁用状态停止动画 */
+        #spinBtn:disabled { 
+            background: #ccc; 
+            box-shadow: none; 
+            transform: none; 
+            animation: none; 
+        }
 
         /* --- 6. 弹窗 --- */
         #modal {
@@ -194,10 +211,12 @@
             100% { transform: scale(1); }
         }
         
+        /* 弹窗按钮样式 (同样应用呼吸动画) */
         .close-btn {
             background: #FF2D55; color: white; border: none; padding: 12px 30px;
             border-radius: 20px; font-weight: bold; margin-top: 20px; width: 100%; cursor: pointer;
             transition: background 0.3s;
+            animation: btnScale 1.2s infinite ease-in-out;
         }
 
     </style>
@@ -310,10 +329,8 @@
             osc.type = 'sine'; 
             osc.frequency.setValueAtTime(400, audioCtx.currentTime);
             osc.frequency.linearRampToValueAtTime(600, audioCtx.currentTime + 0.08);
-            
             gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
-            
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.start(); osc.stop(audioCtx.currentTime + 0.08);
         }
@@ -329,12 +346,10 @@
                 const gain = audioCtx.createGain();
                 osc.type = 'sine'; 
                 osc.frequency.value = freq;
-
                 const start = now + (i * 0.08); 
                 gain.gain.setValueAtTime(0, start);
                 gain.gain.linearRampToValueAtTime(0.3, start + 0.02);
                 gain.gain.exponentialRampToValueAtTime(0.01, start + 0.8);
-
                 osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.start(start); osc.stop(start + 0.8);
             });
