@@ -145,9 +145,7 @@
                 </div>
 
                 <div class="center-circle">
-                    <video class="center-bear-img" autoplay loop muted playsinline poster="https://cdn-icons-png.flaticon.com/512/3769/3769037.png">
-                        <source src="bear.mp4" type="video/mp4"><source src="bear.MP4" type="video/mp4"><source src="e8eb6841ebbe9db9f8b6ff22b2e123d9_720w.cmfv" type="video/mp4">
-                    </video>
+                    <img class="center-bear-img" src="bear.gif" alt="小熊" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3769/3769037.png'">
                 </div>
             </div>
         </div>
@@ -291,8 +289,11 @@
                 playLoseSound();
                 document.getElementById('m-title').innerText = "遗憾离场...";
                 document.getElementById('m-title').style.color = "#666";
+                
+                // 【修改点】固定使用 sad.gif，不再随机
                 mIcon.src = "sad.gif"; 
                 mIcon.className = "anim-lose"; 
+                
                 document.getElementById('m-text').innerHTML = "哎呀！什么都没有抽到！<br><strong>老婆大人</strong>，再试一次，手气在后面！";
                 
                 if (count < 4) {
@@ -308,6 +309,7 @@
 
         function closeResultModal() {
             resultModal.style.display = 'none';
+            // 如果中了大奖，关闭弹窗后，按钮变成信封
             if (isGrandPrize) {
                 btn.innerText = "💌 亲启信件";
                 btn.className = "envelope-btn"; 
